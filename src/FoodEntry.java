@@ -7,6 +7,9 @@ public class FoodEntry {
 	String date;
 	String latitude;
 	String longitude;
+	String failure;
+	String altRisk;
+	String zip;
 	
 	
 	public String getDbaName() {
@@ -37,16 +40,31 @@ public class FoodEntry {
 		return longitude;
 	}
 
-	public FoodEntry(String dbaName,String facilityType,String risk,String date,String latitude,String longitude) {
+	public FoodEntry(String dbaName,String facilityType,String risk,String date,String latitude,String longitude, String failure, String altRisk, String zip) {
 		this.dbaName = dbaName;
 		this.facilityType = facilityType;
 		this.risk = risk;
 		this.date = date;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.failure = failure;
+		this.altRisk = altRisk;
+		this.zip = zip;
 	}
 	
+	public String getZip() {
+		return zip;
+	}
+
 	public String toString() {
-		return("\""+dbaName+"\""+","+facilityType+","+risk+","+date+","+latitude+","+longitude+",\n");
+		return("\""+dbaName+"\""+","+facilityType+","+risk+","+date+","+latitude+","+longitude+","+failure+","+altRisk+"," + zip + ",\n");
+	}
+
+	public String getFailure() {
+		return failure;
+	}
+
+	public String getAltRisk() {
+		return altRisk;
 	}
 }

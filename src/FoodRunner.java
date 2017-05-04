@@ -33,7 +33,7 @@ public class FoodRunner implements Runnable {
 		try {
 			reader1 = new CSVReader(new FileReader(file), CSVParser.DEFAULT_SEPARATOR, CSVParser.DEFAULT_QUOTE_CHARACTER, 1);
 
-			PrintWriter newCSVfile = new PrintWriter("C:\\Users\\kschool\\workspace\\FinalProject\\src\\foodEntries.csv");
+			PrintWriter newCSVfile = new PrintWriter("C:\\Users\\Shubham\\git\\chicago-food-inspections\\src\\foodEntries.csv");
 			
 			
 			String[] record;
@@ -46,11 +46,14 @@ public class FoodRunner implements Runnable {
 				String date = record[10];
 				String latitude = record[14];
 				String longitude = record[15];
+				String failure = record[12];
+				String altRisk = "";
+				String zip = record[9];
 
 				
-				System.out.println(risk);
+				//System.out.println(risk);
 				String riskValue2 = risk.replaceAll("[^0-9]","");
-				System.out.println(riskValue2);
+				//System.out.println(riskValue2);
 				
 				if(!(riskValue2 != null && !riskValue2.isEmpty())) {
 					riskValue2 = "Unspecified";
@@ -72,7 +75,24 @@ public class FoodRunner implements Runnable {
 					longitude = "Unspecified";
 				}
 				
-				FoodEntry entry = new FoodEntry(dbaName, facilityType, riskValue2, date, latitude, longitude);
+				if(!(failure != null && !failure.isEmpty())) {
+					failure = "Unspecified";
+				}
+				
+				if(failure.equalsIgnoreCase("Fail")) {
+					altRisk = "1";
+					if (riskValue2.equals("2")) {
+						altRisk = "2";
+					}
+				} else if (riskValue2.equals("1") && failure.equals("Pass")) {
+					altRisk = "3";
+				} else if (riskValue2.equals("2") && failure.equals("Pass")) {
+					altRisk = "4";
+				} else {
+					altRisk = "5";
+				}
+				
+				FoodEntry entry = new FoodEntry(dbaName, facilityType, riskValue2, date, latitude, longitude, failure, altRisk, zip);
 				entries.add(entry);
 
 			}
